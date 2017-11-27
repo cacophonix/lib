@@ -1,0 +1,17 @@
+package lib.cacophonix.generated.collections;
+
+import lib.cacophonix.generated.collections.iterator.IntIterator;
+
+public interface IntReversableCollection extends IntCollection {
+    //abstract
+    public IntIterator reverseIterator();
+
+    //base
+    default public int last() {
+        return reverseIterator().value();
+    }
+
+    default IntStream reversed() {
+        return () -> reverseIterator();
+    }
+}
