@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
- * @author Egor Kulikov (egorku@yandex-team.ru)
+ * @author cacophonix
  */
 public class Graph {
     public static final int REMOVED_BIT = 0;

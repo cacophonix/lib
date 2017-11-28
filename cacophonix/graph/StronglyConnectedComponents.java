@@ -7,11 +7,15 @@ import lib.cacophonix.generated.collections.set.IntSet;
 import java.util.Arrays;
 
 /**
- * @author Egor Kulikov (egorku@yandex-team.ru)
+ * @author cacophonix
  */
 public class StronglyConnectedComponents {
     private final Graph graph;
     private int[] order;
+    private int[] lowlink;
+    private int[] stack;
+    private int stack_pos;
+    private int color;
     private boolean[] visited;
     private int index = 0;
     private int vertexCount;
@@ -25,6 +29,53 @@ public class StronglyConnectedComponents {
         visited = new boolean[vertexCount];
         condensed = new int[vertexCount];
     }
+
+    public static int[] tarjan(Graph graph) {
+        return new StronglyConnectedComponents(graph).tarjan();
+    }
+
+    private int[] tarjan(){
+        lowlink = new int[vertexCount];
+        stack = new int[vertexCount];
+        index  = 1;
+        for(int i=0;i<vertexCount;i++){
+            if(order[i]==0){
+                calculate_tarjan(i);
+            }
+        }
+        return condensed;
+    }
+
+    private void calculate_tarjan(int node){
+        visited[node] = true;
+        stack[stack_pos++] = node;
+        lowlink[node] = index;
+        order[node] = index;
+        index++;
+        int edge = graph.firstOutbound(node);
+        while(edge!=-1){
+            int next = graph.destination(edge);
+            if(visited[next]) {
+                lowlink[node] = Math.min(lowlink[node],order[next]);
+            }
+            else if(order[next]==0){
+                calculate_tarjan(next);
+                lowlink[node] = Math.min(lowlink[node],lowlink[next]);
+            }
+            edge=graph.nextOutbound(edge);
+        }
+        if(lowlink[node] == order[node]){
+            int current;
+            do{
+                current =  stack[stack_pos-1];
+                stack_pos--;
+                condensed[current] = color;
+                visited[current] = false;
+            } while (current!=node);
+            color++;
+        }
+    }
+
 
     public static Pair<int[], Graph> kosaraju(Graph graph) {
         return new StronglyConnectedComponents(graph).kosaraju();
