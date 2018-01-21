@@ -630,4 +630,65 @@ public class ArrayUtils {
         System.arraycopy(arr2, 0, result, arr1.length, arr2.length);
         return result;
     }
+
+    int lower_bound(int val, int[] arr) {
+        int lo = 0;
+        int hi = arr.length - 1;
+        int mid;
+        while (lo < hi) {
+            mid = (lo + hi) >> 1;
+            if (arr[mid] < val) {
+                lo = mid + 1;
+            } else {
+                hi = mid;
+            }
+        }
+        return lo;
+    }
+
+    int lower_bound(long val, long[] arr) {
+        int lo = 0;
+        int hi = arr.length - 1;
+        int mid;
+        while (lo < hi) {
+            mid = (lo + hi) >> 1;
+            if (arr[mid] < val) {
+                lo = mid + 1;
+            } else {
+                hi = mid;
+            }
+        }
+        return lo;
+    }
+
+    int upper_bound(int val, int[] arr) {
+        int lo = 0;
+        int hi = arr.length;
+        int mid;
+        while (lo < hi) {
+            mid = (lo + hi) >> 1;
+            if (arr[mid] > val) {
+                hi = mid;
+            } else {
+                lo = mid + 1;
+            }
+        }
+        return lo;
+    }
+
+    int upper_bound(long val, long[] arr) {
+        int lo = 0;
+        int hi = arr.length;
+        int mid;
+        while (lo < hi) {
+            mid = (lo + hi) >> 1;
+            if (arr[mid] > val) {
+                hi = mid;
+            } else {
+                lo = mid + 1;
+            }
+        }
+        return lo;
+    }
+
 }
