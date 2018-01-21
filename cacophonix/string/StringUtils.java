@@ -89,6 +89,28 @@ public class StringUtils {
         return z;
     }
 
+    public int[][] manacherShort(String str) {
+        char[] s= str.toCharArray();
+        int n=str.length();
+        int[][] p =new int[2][n];
+        for (int z = 0, l = 0, r = 0; z < 2; z++, l = 0, r = 0) {
+            for (int i = 0; i < n; i++) {
+                if (i < r) p[z][i] = Math.min(r - i + 1 - z, p[z][l + r - i + 1 - z]);
+                int L = i - p[z][i], R = i + p[z][i] - 1 + z;
+                while (L - 1 >= 0 && R + 1 < n && s[L - 1] == s[R + 1]) {
+                    p[z][i]++;
+                    L--;
+                    R++;
+                }
+                if (R > r) {
+                    l = L;
+                    r = R;
+                }
+            }
+        }
+        return p;
+    }
+
     public int[][] manacher(String str){
         char[] s= str.toCharArray();
         int n=s.length;
@@ -98,7 +120,7 @@ public class StringUtils {
         for(int i=0;i<n;i++)
         {
             if(i<r) {
-                p[0][i]=Math.min(r-i+1,p[0][l+r-i]);
+                p[0][i]=Math.min(r-i+1,p[0][l+r-i+1]);
             }
             int L=i-p[0][i], R=i+p[0][i]-1;
             while(L-1>=0 && R+1<n && s[L-1]==s[R+1]) {
@@ -116,7 +138,7 @@ public class StringUtils {
         for(int i=0;i<n;i++)
         {
             if(i<r) {
-                p[1][i]=Math.min(r-i,p[1][l+r-i+1]);
+                p[1][i]=Math.min(r-i,p[1][l+r-i]);
             }
             int L=i-p[1][i], R=i+p[1][i];
             while(L-1>=0 && R+1<n && s[L-1]==s[R+1]) {
