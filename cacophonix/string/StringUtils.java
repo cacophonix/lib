@@ -74,16 +74,16 @@ public class StringUtils {
         char[] s= str.toCharArray();
         int n=s.length;
         int [][] p = new int [2][n];
-        int l=0,r=0,z=0;
+        int l=0,r=0;
 
         for(int i=0;i<n;i++)
         {
             if(i<r) {
-                p[z][i]=Math.min(r-i+1,p[z][l+r-i+z]);
+                p[0][i]=Math.min(r-i+1,p[0][l+r-i]);
             }
-            int L=i-p[z][i], R=i+p[z][i]-1;
+            int L=i-p[0][i], R=i+p[0][i]-1;
             while(L-1>=0 && R+1<n && s[L-1]==s[R+1]) {
-                p[z][i]++;
+                p[0][i]++;
                 L--;
                 R++;
             };
@@ -94,15 +94,14 @@ public class StringUtils {
         }
         l=0;
         r=0;
-        z=1;
         for(int i=0;i<n;i++)
         {
             if(i<r) {
-                p[z][i]=Math.min(r-i,p[z][l+r-i+z]);
+                p[1][i]=Math.min(r-i,p[1][l+r-i+1]);
             }
-            int L=i-p[z][i], R=i+p[z][i];
+            int L=i-p[1][i], R=i+p[1][i];
             while(L-1>=0 && R+1<n && s[L-1]==s[R+1]) {
-                p[z][i]++;
+                p[1][i]++;
                 L--;
                 R++;
             };
