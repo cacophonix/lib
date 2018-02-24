@@ -1,0 +1,31 @@
+package %package%;
+
+import %InputClassFQN%;
+import %OutputClassFQN%;
+
+public class %TaskClass% {
+    public void solve(int testNumber, %InputClass% in, %OutputClass% out) {
+        Thread t= new Thread(null,new Run(in,out),"name",1<<28);
+        t.start();
+        try {
+            t.join();
+        } catch (InterruptedException e) {
+
+        }
+    }
+
+    public class Run extends Thread {
+        %InputClass% in;
+        %OutputClass% out;
+        public Run(%InputClass% in, %OutputClass% out){
+            this.in=in;
+            this.out=out;
+        }
+
+        @Override
+        public void run(){
+
+        }
+    }
+
+}
